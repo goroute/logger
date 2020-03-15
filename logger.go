@@ -120,15 +120,18 @@ func New(options ...Option) route.MiddlewareFunc {
 			// 5xx
 			color = colorRed
 		} else {
-			if res.Status < 300 && res.Status >= 200 {
+			if res.Status >= 200 && res.Status < 300 {
 				// 2xx
 				color = colorBlue
-			} else if res.Status < 200 {
-				// 1xx
-				color = colorGray
-			} else {
+			} else if res.Status >= 500 {
+				// 5xx
+				color = colorRed
+			} else if res.Status >= 300 && res.Status < 500 {
 				// 3xx and 4xx
 				color = colorYellow
+			} else {
+				// 1xx
+				color = colorGray
 			}
 		}
 
